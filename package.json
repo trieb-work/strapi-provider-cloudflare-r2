@@ -1,34 +1,24 @@
 {
   "name": "strapi-provider-cloudflare-r2",
-  "version": "4.8.2",
-  "description": "AWS S3 provider for strapi upload",
+  "version": "0.1.0",
+  "description": "Strapi Cloudflare R2+CDN provider for strapi upload",
+  "strapi": {
+    "name": "strapi-provider-cloudflare-r2",
+    "description": "Use Cloudflare R2 in combination with the Cloudflare CDN as your upload provider",
+    "kind": "provider"
+  },
   "keywords": [
+    "cloudflare",
+    "strapi",
+    "provider",
     "upload",
+    "r2",
+    "cdn",
     "aws",
-    "s3",
-    "strapi"
+    "s3"
   ],
-  "homepage": "https://strapi.io",
-  "bugs": {
-    "url": "https://github.com/strapi/strapi/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/strapi/strapi.git"
-  },
+  "homepage": "https://github.com/trieb-work/strapi-provider-cloudflare-r2",
   "license": "SEE LICENSE IN LICENSE",
-  "author": {
-    "name": "Strapi Solutions SAS",
-    "email": "hi@strapi.io",
-    "url": "https://strapi.io"
-  },
-  "maintainers": [
-    {
-      "name": "Strapi Solutions SAS",
-      "email": "hi@strapi.io",
-      "url": "https://strapi.io"
-    }
-  ],
   "main": "./lib",
   "directories": {
     "lib": "./lib"
@@ -39,6 +29,9 @@
   "dependencies": {
     "aws-sdk": "2.1287.0",
     "lodash": "4.17.21"
+  },
+  "peerDependencies": {
+    "@strapi/strapi": "^4.x.x"
   },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",

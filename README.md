@@ -27,10 +27,14 @@ module.exports = ({ env }) => ({
   // ...
   upload: {
     config: {
-      provider: 'cloudflare-r2',
+      provider: 'strapi-provider-cloudflare-r2',
       providerOptions: {
         accessKeyId: env('CF_ACCESS_KEY_ID'),
         secretAccessKey: env('CF_ACCESS_SECRET'),
+        endpoint: env("CF_ENDPOINT"),
+        params: {
+          Bucket: env("CF_BUCKET"),
+        },
         /**
          * Set this Option to store the CDN URL of your files and not the R2 endpoint URL in your DB.
          * Can be used in Cloudflare R2 with Domain-Access or Public URL: https://pub-<YOUR_PULIC_BUCKET_ID>.r2.dev
@@ -69,13 +73,13 @@ module.exports = [
             "'self'",
             'data:',
             'blob:',
-            env("CF_PUBLIC_ACCESS_URL"),
+            env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, ''),
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
-            env("CF_PUBLIC_ACCESS_URL"),
+            env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, ''),
           ],
           upgradeInsecureRequests: null,
         },
