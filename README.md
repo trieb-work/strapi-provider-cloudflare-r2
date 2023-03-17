@@ -1,16 +1,5 @@
 # strapi-provider-cloudflare-r2
 
-## Resources
-
-- [LICENSE](LICENSE)
-
-## Links
-
-- [Strapi website](https://strapi.io/)
-- [Strapi documentation](https://docs.strapi.io)
-- [Strapi community on Discord](https://discord.strapi.io)
-- [Strapi news on Twitter](https://twitter.com/strapijs)
-
 ## Installation
 
 ```bash
@@ -38,44 +27,21 @@ module.exports = ({ env }) => ({
   // ...
   upload: {
     config: {
-      provider: 'aws-s3',
+      provider: 'cloudflare-r2',
       providerOptions: {
-        accessKeyId: env('AWS_ACCESS_KEY_ID'),
-        secretAccessKey: env('AWS_ACCESS_SECRET'),
-        region: env('AWS_REGION'),
-        params: {
-          Bucket: env('AWS_BUCKET'),
-        },
+        accessKeyId: env('CF_ACCESS_KEY_ID'),
+        secretAccessKey: env('CF_ACCESS_SECRET'),
+        /**
+         * Set this Option to store the CDN URL of your files and not the R2 endpoint URL in your DB.
+         * Can be used in Cloudflare R2 with Domain-Access or Public URL: https://pub-<YOUR_PULIC_BUCKET_ID>.r2.dev
+         * Check the cloudflare docs for the setup: https://developers.cloudflare.com/r2/data-access/public-buckets/#enable-public-access-for-your-bucket
+         */
+        cloudflarePublicAccessUrl: env("CF_PUBLIC_ACCESS_URL"),
       },
       actionOptions: {
         upload: {},
         uploadStream: {},
         delete: {},
-      },
-    },
-  },
-  // ...
-});
-```
-
-#### Configuration for S3 compatible services
-
-This plugin may work with S3 compatible services by using the `endpoint` option instead of `region`. Scaleway example:
-`./config/plugins.js`
-
-```js
-module.exports = ({ env }) => ({
-  // ...
-  upload: {
-    config: {
-      provider: 'aws-s3',
-      providerOptions: {
-        accessKeyId: env('SCALEWAY_ACCESS_KEY_ID'),
-        secretAccessKey: env('SCALEWAY_ACCESS_SECRET'),
-        endpoint: env('SCALEWAY_ENDPOINT'), // e.g. "s3.fr-par.scw.cloud"
-        params: {
-          Bucket: env('SCALEWAY_BUCKET'),
-        },
       },
     },
   },
@@ -103,15 +69,13 @@ module.exports = [
             "'self'",
             'data:',
             'blob:',
-            'dl.airtable.com',
-            'yourBucketName.s3.yourRegion.amazonaws.com',
+            env("CF_PUBLIC_ACCESS_URL"),
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
-            'dl.airtable.com',
-            'yourBucketName.s3.yourRegion.amazonaws.com',
+            env("CF_PUBLIC_ACCESS_URL"),
           ],
           upgradeInsecureRequests: null,
         },
@@ -122,23 +86,30 @@ module.exports = [
 ];
 ```
 
-If you use dots in your bucket name, the url of the ressource is in directory style (`s3.yourRegion.amazonaws.com/your.bucket.name/image.jpg`) instead of `yourBucketName.s3.yourRegion.amazonaws.com/image.jpg`. Then only add `s3.yourRegion.amazonaws.com` to img-src and media-src directives.
-
 ## Bucket CORS Configuration
 
-If you are planning on uploading content like GIFs and videos to your S3 bucket, you will want to edit its CORS configuration so that thumbnails are properly shown in Strapi. To do so, open your Bucket on the AWS console and locate the _Cross-origin resource sharing (CORS)_ field under the _Permissions_ tab, then amend the policies by writing your own JSON configuration, or copying and pasting the following one:
+Do not forget to configure your R2 Endpoint CORS settings as described here: https://developers.cloudflare.com/r2/buckets/cors/
 
+The simplest configuration is to allow GET from all origins:
 ```json
 [
   {
-    "AllowedHeaders": ["*"],
-    "AllowedMethods": ["GET"],
-    "AllowedOrigins": ["YOUR STRAPI URL"],
-    "ExposeHeaders": [],
-    "MaxAgeSeconds": 3000
+    "AllowedOrigins": ["*"],
+    "AllowedMethods": ["GET"]
   }
 ]
 ```
+
+More safe would be to only allow it from your Strapi deployment Origins (**better for production**):
+```json
+[
+  {
+    "AllowedOrigins": ["YOUR STRAPI URL"],
+    "AllowedMethods": ["GET"]
+  }
+]
+```
+
 
 ## Required AWS Policy Actions
 
