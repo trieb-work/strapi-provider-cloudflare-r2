@@ -27,10 +27,10 @@ module.exports = ({ env }) => ({
   // ...
   upload: {
     config: {
-      provider: 'strapi-provider-cloudflare-r2',
+      provider: "strapi-provider-cloudflare-r2",
       providerOptions: {
-        accessKeyId: env('CF_ACCESS_KEY_ID'),
-        secretAccessKey: env('CF_ACCESS_SECRET'),
+        accessKeyId: env("CF_ACCESS_KEY_ID"),
+        secretAccessKey: env("CF_ACCESS_SECRET"),
         endpoint: env("CF_ENDPOINT"),
         params: {
           Bucket: env("CF_BUCKET"),
@@ -63,23 +63,23 @@ Due to the default settings in the Strapi Security Middleware you will need to m
 module.exports = [
   // ...
   {
-    name: 'strapi::security',
+    name: "strapi::security",
     config: {
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'connect-src': ["'self'", 'https:'],
-          'img-src': [
+          "connect-src": ["'self'", "https:"],
+          "img-src": [
             "'self'",
-            'data:',
-            'blob:',
-            env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, ''),
+            "data:",
+            "blob:",
+            env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, ""),
           ],
-          'media-src': [
+          "media-src": [
             "'self'",
-            'data:',
-            'blob:',
-            env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, ''),
+            "data:",
+            "blob:",
+            env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, ""),
           ],
           upgradeInsecureRequests: null,
         },
@@ -95,6 +95,7 @@ module.exports = [
 Do not forget to configure your R2 Endpoint CORS settings as described here: https://developers.cloudflare.com/r2/buckets/cors/
 
 The simplest configuration is to allow GET from all origins:
+
 ```json
 [
   {
@@ -105,6 +106,7 @@ The simplest configuration is to allow GET from all origins:
 ```
 
 More safe would be to only allow it from your Strapi deployment Origins (**better for production**):
+
 ```json
 [
   {
@@ -113,7 +115,6 @@ More safe would be to only allow it from your Strapi deployment Origins (**bette
   }
 ]
 ```
-
 
 ## Required AWS Policy Actions
 
@@ -128,3 +129,7 @@ These are the minimum amount of permissions needed for this provider to work.
   "s3:PutObjectAcl"
 ],
 ```
+
+## Sponsors
+
+[Strapi Plugin developed and maintained by trieb.work cloud consulting](https://trieb.work/)

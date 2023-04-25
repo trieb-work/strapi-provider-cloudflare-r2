@@ -1,9 +1,9 @@
 {
-  "name": "strapi-provider-cloudflare-r2",
-  "version": "0.1.0",
+  "name": "strapi-provider-cloudflare-r2 ",
+  "version": "0.1.1",
   "description": "Strapi Cloudflare R2+CDN provider for strapi upload",
   "strapi": {
-    "name": "strapi-provider-cloudflare-r2",
+    "name": "strapi-provider-cloudflare-r2 ",
     "description": "Use Cloudflare R2 in combination with the Cloudflare CDN as your upload provider",
     "kind": "provider"
   },
@@ -17,11 +17,16 @@
     "aws",
     "s3"
   ],
-  "homepage": "https://github.com/trieb-work/strapi-provider-cloudflare-r2",
+  "homepage": "https://github.com/trieb-work/strapi-provider-cloudflare-r2 ",
   "license": "SEE LICENSE IN LICENSE",
   "main": "./lib",
   "directories": {
     "lib": "./lib"
+  },
+  "author": {
+    "email": "tilman@trieb.work",
+    "name": "Tilman Marquart | trieb.work",
+    "url": "https://trieb.work"
   },
   "scripts": {
     "test": "echo \"no tests yet\""
