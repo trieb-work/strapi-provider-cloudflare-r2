@@ -1,5 +1,5 @@
 {
-  "name": "strapi-provider-cloudflare-r2 ",
+  "name": "strapi-provider-cloudflare-r2",
   "version": "0.1.1",
   "description": "Strapi Cloudflare R2+CDN provider for strapi upload",
   "strapi": {
