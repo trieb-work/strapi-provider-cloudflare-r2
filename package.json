@@ -1,9 +1,9 @@
 {
   "name": "strapi-provider-cloudflare-r2",
-  "version": "0.1.1",
+  "version": "0.1.12",
   "description": "Strapi Cloudflare R2+CDN provider for strapi upload",
   "strapi": {
-    "name": "strapi-provider-cloudflare-r2 ",
+    "name": "strapi-provider-cloudflare-r2",
     "description": "Use Cloudflare R2 in combination with the Cloudflare CDN as your upload provider",
     "kind": "provider"
   },
@@ -28,6 +28,12 @@
     "name": "Tilman Marquart | trieb.work",
     "url": "https://trieb.work"
   },
+  "maintainers": [
+    {
+      "name": "trieb.work",
+      "url": "https://trieb.work"
+    }
+  ],
   "scripts": {
     "test": "echo \"no tests yet\""
   },
@@ -38,7 +44,7 @@
   },
   "publishConfig": {
     "access": "public"
-  },  
+  },
   "dependencies": {
     "aws-sdk": "2.1287.0",
     "lodash": "4.17.21"
