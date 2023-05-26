@@ -1,3 +1,4 @@
+[![npm version](https://badge.fury.io/js/strapi-provider-cloudflare-r2.svg)](https://badge.fury.io/js/strapi-provider-cloudflare-r2)
 # strapi-provider-cloudflare-r2
 
 ## Installation
