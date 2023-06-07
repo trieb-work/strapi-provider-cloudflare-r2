@@ -117,19 +117,6 @@ More safe would be to only allow it from your Strapi deployment Origins (**bette
 ]
 ```
 
-## Required AWS Policy Actions
-
-These are the minimum amount of permissions needed for this provider to work.
-
-```json
-"Action": [
-  "s3:PutObject",
-  "s3:GetObject",
-  "s3:ListBucket",
-  "s3:DeleteObject",
-  "s3:PutObjectAcl"
-],
-```
 
 ## Sponsors
 
