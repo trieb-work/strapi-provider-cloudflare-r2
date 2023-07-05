@@ -1,6 +1,6 @@
 {
   "name": "strapi-provider-cloudflare-r2",
-  "version": "0.1.12",
+  "version": "0.0.0-development",
   "description": "Strapi Cloudflare R2+CDN provider for strapi upload",
   "strapi": {
     "name": "strapi-provider-cloudflare-r2",
@@ -34,7 +34,8 @@
     }
   ],
   "scripts": {
-    "test": "echo \"no tests yet\""
+    "test": "echo \"no tests yet\"",
+    "semantic-release": "semantic-release"
   },
   "release": {
     "branches": [
@@ -54,5 +55,12 @@
   "engines": {
     "node": ">=14.19.1 <=19.x.x",
     "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trieb-work/strapi-provider-cloudflare-r2.git"
+  },
+  "devDependencies": {
+    "semantic-release": "^21.0.7"
   }
 }
