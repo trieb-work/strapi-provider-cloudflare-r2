@@ -57,7 +57,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-**Where to find the configuration options**
+**Where to find the configuration options**  
 You can find all needed values in the Cloudflare dashboard unter `R2`. All your buckets, your account ID and the access keys can be found there.
 - endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` 
 - accessKeyId: You need to click on `Manage R2 API Tokens` to create a new token.
