@@ -71,7 +71,7 @@ Due to the default settings in the Strapi Security Middleware you will need to m
 `./config/middlewares.js`
 
 ```js
-module.exports = [
+module.exports = ({ env }) => ([
   // ...
   {
     name: "strapi::security",
@@ -98,7 +98,7 @@ module.exports = [
     },
   },
   // ...
-];
+]);
 ```
 
 ## Bucket CORS Configuration
