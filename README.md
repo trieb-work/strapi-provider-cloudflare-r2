@@ -101,6 +101,9 @@ module.exports = ({ env }) => ([
 ]);
 ```
 
+### `aws-sdk` configuration and `AWS_...` env variables
+As the Clouflare R2 spec follows the AWS S3 spec we make use of `aws-sdk` package to communicate with Cloudflare R2. Because of this dependency all `AWS_...` env variables used to configure the `aws-sdk` are still beeing pulled in by this dependency. If you do not want to configure any special functionality of the `aws-sdk` then make sure to delete all `AWS_...` env variables in you deployment.
+
 ## Bucket CORS Configuration
 
 Do not forget to configure your R2 Endpoint CORS settings as described here: https://developers.cloudflare.com/r2/buckets/cors/
