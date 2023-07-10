@@ -1,4 +1,5 @@
 [![npm version](https://badge.fury.io/js/strapi-provider-cloudflare-r2.svg)](https://badge.fury.io/js/strapi-provider-cloudflare-r2)
+
 # strapi-provider-cloudflare-r2
 
 ## Installation
@@ -60,10 +61,10 @@ module.exports = ({ env }) => ({
 
 **Where to find the configuration options**  
 You can find all needed values in the Cloudflare dashboard unter `R2`. All your buckets, your account ID and the access keys can be found there.
-- endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` 
+
+- endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`
 - accessKeyId: You need to click on `Manage R2 API Tokens` to create a new token.
 - secretAccessKey: You need to click on `Manage R2 API Tokens` to create a new token.
-
 
 ### Security Middleware Configuration
 
@@ -72,7 +73,7 @@ Due to the default settings in the Strapi Security Middleware you will need to m
 `./config/middlewares.js`
 
 ```js
-module.exports = ({ env }) => ([
+module.exports = ({ env }) => [
   // ...
   {
     name: "strapi::security",
@@ -99,11 +100,12 @@ module.exports = ({ env }) => ([
     },
   },
   // ...
-]);
+];
 ```
 
 ### `aws-sdk` configuration and `AWS_...` env variables
-As the Clouflare R2 spec follows the AWS S3 spec we make use of `aws-sdk` package to communicate with Cloudflare R2. Because of this dependency all `AWS_...` env variables used to configure the `aws-sdk` are still beeing pulled in by this dependency. If you do not want to configure any special functionality of the `aws-sdk` then make sure to delete all `AWS_...` env variables in you deployment.
+
+As the Clouflare R2 spec follows the AWS S3 spec we make use of `aws-sdk` package to communicate with Cloudflare R2. Because of this dependency all `AWS_...` env variables used to configure the `aws-sdk` are still beeing pulled in by this dependency. If you do not want to configure any special functionality of the `aws-sdk` then make sure to remove all `AWS_...` env variables in you deployment.
 
 ## Bucket CORS Configuration
 
@@ -130,7 +132,6 @@ More safe would be to only allow it from your Strapi deployment Origins (**bette
   }
 ]
 ```
-
 
 ## Sponsors
 
