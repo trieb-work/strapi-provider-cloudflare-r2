@@ -50,7 +50,7 @@
     "lodash": "4.17.21"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4.x.x"
+    "@strapi/strapi": ">=4.0.0"
   },
   "engines": {
     "node": ">=14.19.1 <=19.x.x",
