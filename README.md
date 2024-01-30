@@ -10,7 +10,12 @@ yarn add strapi-provider-cloudflare-r2
 
 # using npm
 npm install strapi-provider-cloudflare-r2 --save
+
+# using pnpm 
+pnpm add strapi-provider-cloudflare-r2
 ```
+
+
 
 ## Configuration
 
