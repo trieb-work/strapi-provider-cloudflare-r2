@@ -144,6 +144,7 @@ More safe would be to only allow it from your Strapi deployment Origins (**bette
 ]
 ```
 
+
 ## Sponsors
 
 [Strapi Plugin developed and maintained by trieb.work cloud consulting](https://trieb.work/)
