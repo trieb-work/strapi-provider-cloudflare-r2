@@ -11,11 +11,9 @@ yarn add strapi-provider-cloudflare-r2
 # using npm
 npm install strapi-provider-cloudflare-r2 --save
 
-# using pnpm 
+# using pnpm
 pnpm add strapi-provider-cloudflare-r2
 ```
-
-
 
 ## Configuration
 
@@ -57,6 +55,12 @@ module.exports = ({ env }) => ({
          * Check the cloudflare docs for the setup: https://developers.cloudflare.com/r2/data-access/public-buckets/#enable-public-access-for-your-bucket
          */
         cloudflarePublicAccessUrl: env("CF_PUBLIC_ACCESS_URL"),
+        /**
+         * Sets if all assets should be uploaded in the root dir regardless the strapi folder.
+         * It is useful because strapi sets folder names with numbers, not by user's input folder name
+         * By default it is false
+         */
+        pool: false,
       },
       actionOptions: {
         upload: {},
@@ -116,14 +120,16 @@ module.exports = ({ env }) => [
             "'self'",
             "data:",
             "blob:",
-            env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, ""),
+            "market-assets.strapi.io",
+            env("CF_PUBLIC_ACCESS_URL") ? env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, "") : "",
             `${env('CF_BUCKET')}.${env('CF_ACCOUNT_ID')}.r2.cloudflarestorage.com`,
           ],
           "media-src": [
             "'self'",
             "data:",
             "blob:",
-            env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, ""),
+            "market-assets.strapi.io",
+            env("CF_PUBLIC_ACCESS_URL") ? env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, "") : "",
             `${env('CF_BUCKET')}.${env('CF_ACCOUNT_ID')}.r2.cloudflarestorage.com`,
           ],
           upgradeInsecureRequests: null,
@@ -164,6 +170,7 @@ More safe would be to only allow it from your Strapi deployment Origins (**bette
   }
 ]
 ```
+
 
 ## Sponsors
 
