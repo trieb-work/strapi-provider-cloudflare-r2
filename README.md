@@ -34,14 +34,19 @@ module.exports = ({ env }) => ({
     config: {
       provider: "strapi-provider-cloudflare-r2",
       providerOptions: {
-        accessKeyId: env("CF_ACCESS_KEY_ID"),
-        secretAccessKey: env("CF_ACCESS_SECRET"),
+        credentials: {
+          accessKeyId: env("CF_ACCESS_KEY_ID"),
+          secretAccessKey: env("CF_ACCESS_SECRET"),
+        },
+        region: env("CF_REGION"),
         /**
          * `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`
          */
         endpoint: env("CF_ENDPOINT"),
         params: {
+          ACL: 'private',
           Bucket: env("CF_BUCKET"),
+          accountId: env("CF_ACCOUNT_ID"),
         },
         /**
          * Set this Option to store the CDN URL of your files and not the R2 endpoint URL in your DB.
@@ -77,6 +82,26 @@ You can find all needed values in the Cloudflare dashboard unter `R2`. All your 
 
 ### Security Middleware Configuration
 
+This is an important step for private buckets as by default Strapi adds the `updatedAt` field to the file object. This field is not allowed in the Cloudflare R2 API and will result in a `400 Bad Request` error. To avoid this error we need to remove the `updatedAt` field from the file object before it is returned to the client.
+
+`./config/middlewares/strapi-provider-cloudflare-r2/index.js` or `.ts` for TypeScript projects:
+
+```js
+module.exports = (config, { strapi }) => {
+  return async (ctx, next) => {
+    await next();
+
+    if (ctx.request.url.includes("upload/files")) {
+      if (ctx.response.body && typeof ctx.response.body === "object") {
+        for (let file of ctx.response.body.results) {
+          if (file.url.includes(".r2.cloudflarestorage.com")) delete file.updatedAt
+        }
+      }
+    }
+  };
+};
+```
+
 Due to the default settings in the Strapi Security Middleware you will need to modify the `contentSecurityPolicy` settings to properly display thumbnail previews in the Media Library. You should replace the `strapi::security` string with the object below **instead as explained in the [middleware configuration](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html#loading-order) documentation**.
 
 `./config/middlewares.js`
@@ -97,6 +122,7 @@ module.exports = ({ env }) => [
             "blob:",
             "market-assets.strapi.io",
             env("CF_PUBLIC_ACCESS_URL") ? env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, "") : "",
+            `${env('CF_BUCKET')}.${env('CF_ACCOUNT_ID')}.r2.cloudflarestorage.com`,
           ],
           "media-src": [
             "'self'",
@@ -104,6 +130,7 @@ module.exports = ({ env }) => [
             "blob:",
             "market-assets.strapi.io",
             env("CF_PUBLIC_ACCESS_URL") ? env("CF_PUBLIC_ACCESS_URL").replace(/^https?:\/\//, "") : "",
+            `${env('CF_BUCKET')}.${env('CF_ACCOUNT_ID')}.r2.cloudflarestorage.com`,
           ],
           upgradeInsecureRequests: null,
         },
